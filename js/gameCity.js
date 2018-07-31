@@ -2,43 +2,47 @@ let cityList = 'абаза абакан абвиль абдулино абидж
 
 let userImput = document.querySelector('#wordUser'); console.log(userImput);
 let buttonUser = document.getElementById('btn'); console.log(buttonUser);
+let buttonPc = document.getElementById('btnpc'); 
 let holder = document.querySelector('#history');
+let stopButton = document.getElementById('stop'); console.log(stop);
 let cityArr = cityList.split(" ");
+let lastLetter;
 cityArr.sort(function(a,b){
 	return Math.random() > 0.5 ? 1 : -1;
 })
 let usedCities=[];
 let player = true;
-function checkCity(city){
-	if (cityArr.indexOf(city) > -1){
-		return true;		
-	}
-	else {
-		return false;
-	}	
-}
-//console.log(checkCity("тара"));
+
 
 function checkLetter(city){
 	let lastLetter = city[city.length-1];
 	console.log("cityCheck", lastLetter);
 	if ( lastLetter == "ё"|| lastLetter == "ь" || lastLetter == "ы" || lastLetter == "ъ"){
 		lastLetter = city[city.length-2];}
-	for(i=0; i<cityArr.length; i++){
+	
+	
+		for(i=0; i<cityArr.length; i++){
 		if(usedCities.indexOf(cityArr[i])>-1){
 			continue;
 		}
+		//if (player){
+		  
+			
+	
 		if (cityArr[i][0]==lastLetter){
 			console.log(cityArr[i]);
 			
 			usedCities.push(cityArr[i]);
+			console.log(usedCities[usedCities.length-1].slice(-1));
 			console.log(usedCities);
 			showCity({
 						city:cityArr[i],
 						player: player})
 			break;
 		}
+	
 	}
+
 		
 //	cityArr.map(function (item,index){
 //				if (item[0] == lastLetter){
@@ -52,19 +56,57 @@ function checkLetter(city){
 //				})
 }
 
-function showCity(obj){
-	let div = document.createElement('div');
-	let span = document.createElement('span');
+
+function checkCity(city){
+	city = city.toLowerCase();
 	
-	div.textContent = obj.city;
-	span.textContent = obj.player ? ' Пользователь' : ' Компьютер';
-	div.appendChild(span);ы
+	if (cityArr.indexOf(city) > -1 && usedCities.indexOf(city)==-1){
+		
+		
+		return true;		
+		}
+	else{
+		alert('Введите другой город')
+		return false;
+		
+	}
+	
+}
+//console.log(checkCity("тара"));
+
+
+
+function showCity(obj){
+	let div = document.createElement('div');	
+	let span = document.createElement('span');	
+	div.textContent = obj.city;	
+	span.textContent = obj.player
+		if (obj.player){
+			span.textContent = ' \n'+'Игрок';
+			div.style.textAlign ='left';
+			div.style.color = 'red';
+			
+		}
+	else {
+			span.textContent = ' \n'+'Компьютер';
+			div.style.textAlign = 'right';
+			div.style.color = 'green';
+	}	
+		
+	div.appendChild(span);
 	holder.appendChild(div);
 	
 }
 function userTurn(){
-	let city = userImput.value;
+	let city = userImput.value;	
+	
+	//console.log(usedCities[usedCities.length-1].slice(-1));
 	if (checkCity(city)){
+		if((usedCities[usedCities.length-1].slice(-1)) )
+		
+			//if(usedCities(city)[]){
+			   
+			   
 //		if (usedCities.length>0){
 //			checkLetter(city);
 //			player = !player;
@@ -73,37 +115,49 @@ function userTurn(){
 //		}
 //		else{
 			
-			usedCities.push(city);
+		 usedCities.push(city);
 			showCity({
-			city: city,
+		city: city,
 			player: player});
-			player = !player;
+		player = !player;
+		
 			
 		//}		
-		
-	}
+		}
 	
 }
+
 function pcTurn(){
 	let city = usedCities[usedCities.length-1];
 	console.log(usedCities);
 	checkLetter(city);
 	player=!player;	
 	
+	
+	
 }
 
-function startGame(){
-	if (player){
+function userGame(){
 		userTurn();
 	}
-	else{
-		pcTurn();
+	
+function pcGame(){
+		let timeoutId = window.setTimeout(pcTurn, 200);
+		
 	}
 
+
+
+function finishGame(obj){
+	let stopDiv = document.createElement('div');	
+	stopDiv.style.textAlign = 'centr';
+	stopDiv.textContent = obj.player ? ' Игрок выиграл' : ' Компьютер выиграл';
+	holder.appendChild(stopDiv);
+
 }
-
-buttonUser.onclick = startGame;
-
+buttonPc.onclick = pcGame;
+buttonUser.onclick = userGame;
+stopButton.onclick = finishGame;
 
 
 

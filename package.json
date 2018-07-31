@@ -1,0 +1,23 @@
+{
+  "name": "gitgame",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "scripts": {
+   	"build": "webpack",
+  	"start": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tamara1234567/gameCity.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tamara1234567/gameCity/issues"
+  },
+  "homepage": "https://github.com/Tamara1234567/gameCity#readme",
+  "description": "",
+  "devDependencies": {
+    "webpack": "^4.16.3"
+  }
+}
