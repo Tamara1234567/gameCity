@@ -99,10 +99,28 @@ function showCity(obj){
 }
 function userTurn(){
 	let city = userImput.value;	
+	let prevCityLastLetter;
 	
+	if (usedCities.length>0){
+		prevCityLastLetter = usedCities[usedCities.length-1].slice(-1);
+		
+	}
 	//console.log(usedCities[usedCities.length-1].slice(-1));
 	if (checkCity(city)){
-		if((usedCities[usedCities.length-1].slice(-1)) )
+		if (prevCityLastLetter){
+			if (prevCityLastLetter !== city[0]){
+				alert(`Введите город, который начиннается на букву ${prevCityLastLetter}`);
+			}
+			else{
+				usedCities.push(city);
+				showCity({
+					city: city,
+					player: player});
+				player = !player;
+				pcTurn();
+			}
+			
+		}
 		
 			//if(usedCities(city)[]){
 			   
@@ -112,19 +130,18 @@ function userTurn(){
 //			player = !player;
 //			console.log()
 //			
-//		}
-//		else{
-			
-		 usedCities.push(city);
-			showCity({
-		city: city,
-			player: player});
-		player = !player;
-		
-			
-		//}		
-		}
 	
+		else {
+			
+		usedCities.push(city);
+		showCity({
+				city: city,
+				player: player});
+		player = !player;
+			pcTurn();
+		}	
+		
+	}	
 }
 
 function pcTurn(){
@@ -155,7 +172,7 @@ function finishGame(obj){
 	holder.appendChild(stopDiv);
 
 }
-buttonPc.onclick = pcGame;
+//buttonPc.onclick = pcGame;
 buttonUser.onclick = userGame;
 stopButton.onclick = finishGame;
 
