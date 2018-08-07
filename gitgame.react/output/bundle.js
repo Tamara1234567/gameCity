@@ -19240,6 +19240,8 @@ var Game = function (_React$Component) {
 	}, {
 		key: "userTurn",
 		value: function userTurn() {
+			var _this2 = this;
+
 			var city = this.state.userCity;
 			console.log(city);
 			var prevCityLastLetter = void 0;
@@ -19254,36 +19256,53 @@ var Game = function (_React$Component) {
 					} else {
 						arr.push(city);
 						console.log(city);
-						this.setState({ usedCities: arr });
-						this.showCity({
+
+						// this.showCity({
+						// 	city: city,
+						// 	player:this.player});
+
+						var cArr = this.state.cityObjArr.concat([]);
+						cArr.push({
 							city: city,
-							player: this.player });
-						this.player = !this.player;
-						this.pcTurn();
+							player: this.player
+						});
+
+						this.setState({ usedCities: arr, cityObjArr: cArr }, function () {
+							_this2.player = !_this2.player;
+							_this2.pcTurn();
+						});
 					}
 				} else {
 					console.log(city);
-					console.log(arr);
+					console.log(arr); /// Empty Arr
 					arr.push(city);
-					console.log(arr);
+					console.log(arr); //// Ok Arr
 
-					this.setState({ usedCities: arr });
-					console.log(this.state.usedCities);
-					this.showCity({
+					//this.setState({usedCities : arr});
+					//console.log(this.state.usedCities ); /////!!!! Empty Arr			
+					// this.showCity({
+					// 		city: city,
+					// 		player: this.player});
+
+					var _cArr = this.state.cityObjArr.concat([]);
+					_cArr.push({
 						city: city,
-						player: this.player });
-					this.player = !this.player;
-					console.log(this.state.usedCities);
-					this.pcTurn();
+						player: this.player
+					});
+					this.setState({ usedCities: arr, cityObjArr: _cArr }, function () {
+						_this2.player = !_this2.player;
+						_this2.pcTurn();
+						console.log(_this2.state);
+					});
 				}
 			}
 		}
 	}, {
 		key: "pcTurn",
 		value: function pcTurn() {
-			console.log(this.state.usedCities);
+			console.log(this.state.usedCities); // Empty ARR
 			var city = this.state.usedCities[this.state.usedCities.length - 1];
-			console.log(city);
+			console.log(city); /// ERR
 			this.checkLetter(city);
 			this.player = !this.player;
 		}

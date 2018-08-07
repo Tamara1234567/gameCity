@@ -81,40 +81,59 @@ export default class Game extends React.Component {
 				else{
 					arr.push(city);
 					console.log(city);
-					this.setState({usedCities : arr});
-					this.showCity({
-						city: city,
-						player:this.player});
-					this.player = !this.player;
-					this.pcTurn();
+					
+					// this.showCity({
+					// 	city: city,
+					// 	player:this.player});
+
+					let cArr = this.state.cityObjArr.concat([]);
+					cArr.push({
+							city: city,
+							player: this.player
+						});
+
+					this.setState({usedCities : arr, cityObjArr: cArr}, () => {
+						this.player = !this.player;
+						this.pcTurn();
+					});
+
+					
 				}
 
 
 								
 			}	
 			else {	
-			console.log(city);
-			console.log(arr);
-			arr.push(city);
-			console.log(arr);
+				console.log(city);
+				console.log(arr); /// Empty Arr
+				arr.push(city);
+				console.log(arr); //// Ok Arr
 
-			this.setState({usedCities : arr});
-			console.log(this.state.usedCities );			
-			this.showCity({
-					city: city,
-					player: this.player});
-			this.player = !this.player;
-			console.log(this.state.usedCities);
-			this.pcTurn();
+				//this.setState({usedCities : arr});
+				//console.log(this.state.usedCities ); /////!!!! Empty Arr			
+				// this.showCity({
+				// 		city: city,
+				// 		player: this.player});
+				
+				let cArr = this.state.cityObjArr.concat([]);
+				cArr.push({
+						city: city,
+						player: this.player
+					});
+				this.setState({usedCities : arr, cityObjArr: cArr}, () => {
+					this.player = !this.player;
+					this.pcTurn();
+					console.log(this.state);
+				});	
 
 			}				
 		}			
 	}
 
 		pcTurn(){
-			console.log(this.state.usedCities);
+			console.log(this.state.usedCities); // Empty ARR
 			let city = this.state.usedCities[this.state.usedCities.length-1];
-			console.log(city);
+			console.log(city); /// ERR
 			this.checkLetter(city);
 			this.player = !this.player;	
 			}
